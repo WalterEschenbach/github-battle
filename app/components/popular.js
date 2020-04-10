@@ -5,7 +5,7 @@ import {
   FaUser,
   FaStar,
   FaCodeBranch,
-  FaExclamationTriangle
+  FaExclamationTriangle,
 } from "react-icons/fa";
 
 //functional component that renders our nav
@@ -14,7 +14,7 @@ function LanguagesNav({ selected, onUpdateLanguage }) {
 
   return (
     <ul className="flex-center">
-      {languages.map(lang => (
+      {languages.map((lang) => (
         <li key={lang}>
           <button
             className="btn-clear nav-link"
@@ -32,11 +32,11 @@ function LanguagesNav({ selected, onUpdateLanguage }) {
 //authentication for our components props
 LanguagesNav.propTypes = {
   selected: PropTypes.string.isRequired,
-  onUpdateLanguage: PropTypes.func.isRequired
+  onUpdateLanguage: PropTypes.func.isRequired,
 };
 
 ReposGrid.propTypes = {
-  repos: PropTypes.array.isRequired
+  repos: PropTypes.array.isRequired,
 };
 
 //grid for our repos
@@ -50,12 +50,12 @@ function ReposGrid({ repos }) {
           html_url,
           stargazers_count,
           forks,
-          open_issues
+          open_issues,
         } = repo;
         const { login, avatar_url } = owner;
 
         return (
-          <li key={html_url} className="repo bg-light">
+          <li key={html_url} className="card bg-light">
             <h4 className="header-lg center-text">#{index + 1}</h4>
             <img
               className="avatar"
@@ -115,12 +115,12 @@ class Popular extends React.Component {
 
     if (!this.state.repos[selectedLanguage]) {
       fetchPopularRepos(selectedLanguage)
-        .then(data => {
+        .then((data) => {
           this.setState(({ repos }) => ({
             repos: {
               ...repos,
-              [selectedLanguage]: data
-            }
+              [selectedLanguage]: data,
+            },
           }));
         })
         .catch(() => {
@@ -145,7 +145,7 @@ class Popular extends React.Component {
           onUpdateLanguage={this.updateLanguage}
         />
         {this.isLoading() && <p>LOADING</p>}
-        {error && <p>{error}</p>}
+        {error && <p className="center-text error">{error}</p>}
         {repos[selectedLanguage] && (
           <ReposGrid repos={repos[selectedLanguage]} />
         )}

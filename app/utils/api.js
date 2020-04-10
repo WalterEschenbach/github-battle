@@ -1,8 +1,9 @@
 //fetch data from github api
 
-const id = "YOUR_CLIENT_ID";
-const sec = "YOUR_SECRET_ID";
+const id = "c3eb9d762e9c18301f9c";
+const sec = "7bf13ce9f549c4fc99339da4bea70af96673a5ac";
 const params = `?client_id${id}&client_secret${sec}`;
+const proxyUrl = "https://cors-anywhere.herokuapp.com/";
 
 function getErrorMsg(message, username) {
   if (message === "Not Found") {
@@ -12,9 +13,9 @@ function getErrorMsg(message, username) {
 }
 
 function getProfile(username) {
-  return fetch(`https://github.com/users/${username}${params}`)
-    .then(res => res.json())
-    .then(profile => {
+  return fetch(`https://api.github.com/users/${username}${params}`)
+    .then((res) => res.json())
+    .then((profile) => {
       if (profile.message) {
         throw new Error(getErrorMsg(profile.message, username));
       }
@@ -26,8 +27,8 @@ function getRepos(username) {
   return fetch(
     `https://api.github.com/users/${username}/repos${params}&per_page=100`
   )
-    .then(res => res.json())
-    .then(repos => {
+    .then((res) => res.json())
+    .then((repos) => {
       if (repos.message) {
         throw new Error(getErrorMsg(repos.message, username));
       }
@@ -50,7 +51,7 @@ function getUserData(player) {
   return Promise.all([getProfile(player), getRepos(player)]).then(
     ([profile, repos]) => ({
       profile,
-      score: calculateScore(profile.followers, repos)
+      score: calculateScore(profile.followers, repos),
     })
   );
 }
@@ -62,8 +63,8 @@ function sortPlayers(players) {
 export function battle(players) {
   return Promise.all([
     getUserData(players[0]),
-    getUserData(players[1])
-  ]).then(results => sortPlayers(results));
+    getUserData(players[1]),
+  ]).then((results) => sortPlayers(results));
 }
 
 export function fetchPopularRepos(language) {
@@ -72,8 +73,8 @@ export function fetchPopularRepos(language) {
   );
 
   return fetch(endpoint)
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       if (!data.items) {
         throw new Error(data.message);
       }
