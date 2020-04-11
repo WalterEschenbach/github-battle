@@ -8,6 +8,7 @@ import {
   FaUserFriends,
 } from "react-icons/fa";
 import Card from "./card";
+import Loading from "./loading";
 
 function ProfileList({ profile }) {
   return (
@@ -72,7 +73,7 @@ class Results extends React.Component {
     const { winner, loser, error, loading } = this.state;
     const { onReset } = this.props;
     if (loading === true) {
-      return <p>LOADING</p>;
+      return <Loading text="Battling" />;
     }
     if (error) {
       return <p className="center-text error">{error}</p>;

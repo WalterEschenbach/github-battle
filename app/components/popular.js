@@ -8,6 +8,7 @@ import {
   FaExclamationTriangle,
 } from "react-icons/fa";
 import Card from "./card";
+import Loading from "./loading";
 
 //functional component that renders our nav
 function LanguagesNav({ selected, onUpdateLanguage }) {
@@ -140,7 +141,7 @@ class Popular extends React.Component {
           selected={selectedLanguage}
           onUpdateLanguage={this.updateLanguage}
         />
-        {this.isLoading() && <p>LOADING</p>}
+        {this.isLoading() && <Loading text="Fetching Repos" />}
         {error && <p className="center-text error">{error}</p>}
         {repos[selectedLanguage] && (
           <ReposGrid repos={repos[selectedLanguage]} />
