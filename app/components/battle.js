@@ -3,7 +3,7 @@ import {
   FaUserFriends,
   FaFighterJet,
   FaTrophy,
-  FaTimesCircle
+  FaTimesCircle,
 } from "react-icons/fa";
 import PropTypes from "prop-types";
 import Results from "./Results";
@@ -39,7 +39,7 @@ class PlayerInput extends React.Component {
     super(props);
 
     this.state = {
-      username: ""
+      username: "",
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,7 +52,7 @@ class PlayerInput extends React.Component {
   }
   handleChange(event) {
     this.setState({
-      username: event.target.value
+      username: event.target.value,
     });
   }
   render() {
@@ -86,7 +86,7 @@ class PlayerInput extends React.Component {
 
 PlayerInput.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
 };
 
 function PlayerPreview({ username, onReset, label }) {
@@ -115,7 +115,7 @@ function PlayerPreview({ username, onReset, label }) {
 PlayerPreview.propTypes = {
   username: PropTypes.string.isRequired,
   onReset: PropTypes.func.isRequired,
-  label: PropTypes.string.isRequired
+  label: PropTypes.string.isRequired,
 };
 
 export default class Battle extends React.Component {
@@ -125,7 +125,7 @@ export default class Battle extends React.Component {
     this.state = {
       playerOne: null,
       playerTwo: null,
-      battle: false
+      battle: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -133,19 +133,31 @@ export default class Battle extends React.Component {
   }
   handleSubmit(id, player) {
     this.setState({
-      [id]: player
+      [id]: player,
     });
   }
   handleReset(id) {
     this.setState({
-      [id]: null
+      [id]: null,
     });
   }
   render() {
     const { playerOne, playerTwo, battle } = this.state;
 
     if (battle === true) {
-      return <Results playerOne={playerOne} playerTwo={playerTwo} />;
+      return (
+        <Results
+          playerOne={playerOne}
+          playerTwo={playerTwo}
+          onReset={() =>
+            this.setState({
+              playerOne: null,
+              playerTwo: null,
+              battle: false,
+            })
+          }
+        />
+      );
     }
 
     return (
@@ -158,7 +170,7 @@ export default class Battle extends React.Component {
             {playerOne === null ? (
               <PlayerInput
                 label="Player One"
-                onSubmit={player => this.handleSubmit("playerOne", player)}
+                onSubmit={(player) => this.handleSubmit("playerOne", player)}
               />
             ) : (
               <PlayerPreview
@@ -171,7 +183,7 @@ export default class Battle extends React.Component {
             {playerTwo === null ? (
               <PlayerInput
                 label="Player Two"
-                onSubmit={player => this.handleSubmit("playerTwo", player)}
+                onSubmit={(player) => this.handleSubmit("playerTwo", player)}
               />
             ) : (
               <PlayerPreview

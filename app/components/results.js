@@ -4,13 +4,41 @@ import {
   FaCompass,
   FaBriefcase,
   FaUsers,
-  FaCode,
   FaUser,
   FaUserFriends,
-  FaFighterJet,
-  FaTrophy,
-  FaTimesCircle,
 } from "react-icons/fa";
+import Card from "./card";
+
+function ProfileList({ profile }) {
+  return (
+    <ul className="card-list">
+      <li>
+        <FaUser color="rgb(239,115, 115)" size={22} />
+        {profile.name}
+      </li>
+      {profile.location && (
+        <li>
+          <FaCompass color="rgb(144,115, 255)" size={22} />
+          {profile.location}
+        </li>
+      )}
+      {profile.company && (
+        <li>
+          <FaBriefcase color="#795548" size={22} />
+          {profile.company}
+        </li>
+      )}
+      <li>
+        <FaUsers color="rgb(129,195, 245)" size={22} />
+        {profile.followers.toLocaleString()} followers
+      </li>
+      <li>
+        <FaUserFriends color="rgb(64,183, 95)" size={22} />
+        {profile.following.toLocaleString()} following
+      </li>
+    </ul>
+  );
+}
 
 class Results extends React.Component {
   constructor(props) {
@@ -42,6 +70,7 @@ class Results extends React.Component {
 
   render() {
     const { winner, loser, error, loading } = this.state;
+    const { onReset } = this.props;
     if (loading === true) {
       return <p>LOADING</p>;
     }
@@ -49,94 +78,32 @@ class Results extends React.Component {
       return <p className="center-text error">{error}</p>;
     }
     return (
-      <div className="grid space-around container-sm">
-        <div className="card bg-light">
-          <h4 className="header-lg center-text">
-            {winner.score === loser.score ? "Tie" : "Winner"}
-          </h4>
-          <img
-            className="avatar"
-            src={winner.profile.avatar_url}
-            alt={`Avatar for ${winner.profile.login}`}
-          />
-          <h4 className="center-text">
-            Score: {winner.score.toLocaleString()}
-          </h4>
-          <h2 className="center-text">
-            <a href={winner.profile.html_url} className="link">
-              {winner.profile.login}
-            </a>
-          </h2>
-          <ul className="card-list">
-            <li>
-              <FaUser color="rgb(239,115, 115)" size={22} />
-              {winner.profile.name}
-            </li>
-            {winner.profile.location && (
-              <li>
-                <FaCompass color="rgb(144,115, 255)" size={22} />
-                {winner.profile.location}
-              </li>
-            )}
-            {winner.profile.company && (
-              <li>
-                <FaBriefcase color="#795548" size={22} />
-                {winner.profile.company}
-              </li>
-            )}
-            <li>
-              <FaUsers color="rgb(129,195, 245)" size={22} />
-              {winner.profile.followers.toLocaleString()} followers
-            </li>
-            <li>
-              <FaUserFriends color="rgb(64,183, 95)" size={22} />
-              {winner.profile.following.toLocaleString()} following
-            </li>
-          </ul>
+      <React.Fragment>
+        <div className="grid space-around container-sm">
+          <Card
+            header={winner.score === loser.score ? "Tie" : "Winner"}
+            subheader={`${winner.score.toLocaleString()}`}
+            avatar={winner.profile.avatar_url}
+            href={winner.profile.html_url}
+            name={winner.profile.login}
+          >
+            <ProfileList profile={winner.profile} />
+          </Card>
+
+          <Card
+            header={winner.score === loser.score ? "Tie" : "loser"}
+            subheader={`${loser.score.toLocaleString()}`}
+            avatar={loser.profile.avatar_url}
+            href={loser.profile.html_url}
+            name={loser.profile.login}
+          >
+            <ProfileList profile={loser.profile} />
+          </Card>
         </div>
-        <div className="card bg-light">
-          <h4 className="header-lg center-text">
-            {winner.score === loser.score ? "Tie" : "Loser"}
-          </h4>
-          <img
-            className="avatar"
-            src={loser.profile.avatar_url}
-            alt={`Avatar for ${loser.profile.login}`}
-          />
-          <h4 className="center-text">Score: {loser.score.toLocaleString()}</h4>
-          <h2 className="center-text">
-            <a href={loser.profile.html_url} className="link">
-              {loser.profile.login}
-            </a>
-          </h2>
-          <ul className="card-list">
-            <li>
-              <FaUser color="rgb(239,115, 115)" size={22} />
-              {loser.profile.name}
-            </li>
-            {loser.profile.location && (
-              <li>
-                <FaCompass color="rgb(144,115, 255)" size={22} />
-                {loser.profile.location}
-              </li>
-            )}
-            {loser.profile.company && (
-              <li>
-                <FaBriefcase color="#795548" size={22} />
-                {loser.profile.company}
-              </li>
-            )}
-            <li>
-              <FaUsers color="rgb(129,195, 245)" size={22} />
-              {loser.profile.followers.toLocaleString()} followers
-            </li>
-            <li>
-              <FaUserFriends color="rgb(64,183, 95)" size={22} />
-              {loser.profile.following.toLocaleString()} following
-            </li>
-          </ul>
-        </div>
-      </div>
+        <button className="btn dark-btn btn-space" onClick={onReset}>
+          Reset
+        </button>
+      </React.Fragment>
     );
   }
 }
