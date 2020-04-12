@@ -10,6 +10,8 @@ import {
 import Card from "./card";
 import Loading from "./loading";
 import Tooltip from "./tooltip";
+import { Link } from "react-router-dom";
+const queryString = require("query-string");
 
 function ProfileList({ profile }) {
   return (
@@ -59,7 +61,10 @@ class Results extends React.Component {
   }
 
   componentDidMount() {
-    const { playerOne, playerTwo } = this.props;
+    console.log(this.props.location.search);
+    const { playerOne, playerTwo } = queryString.parse(
+      this.props.location.search
+    );
     battle([playerOne, playerTwo])
       .then((players) => {
         this.setState({
@@ -106,9 +111,9 @@ class Results extends React.Component {
             <ProfileList profile={loser.profile} />
           </Card>
         </div>
-        <button className="btn dark-btn btn-space" onClick={onReset}>
+        <Link className="btn dark-btn btn-space" to="/battle">
           Reset
-        </button>
+        </Link>
       </React.Fragment>
     );
   }
