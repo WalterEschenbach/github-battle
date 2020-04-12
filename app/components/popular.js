@@ -93,24 +93,16 @@ function ReposGrid({ repos }) {
   );
 }
 
-//class that controls our state
 class Popular extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { selectedLanguage: "All", repos: {}, error: null };
-
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = { selectedLanguage: "All", repos: {}, error: null };
 
   //initial setState for our components once it mounts
-  componentDidMount() {
+  componentDidMount = () => {
     this.updateLanguage(this.state.selectedLanguage);
-  }
+  };
 
   //method to fetch data and cache data via setState every time a new language is selected
-  updateLanguage(selectedLanguage) {
+  updateLanguage = (selectedLanguage) => {
     this.setState({ selectedLanguage, error: null });
 
     if (!this.state.repos[selectedLanguage]) {
@@ -128,13 +120,13 @@ class Popular extends React.Component {
           this.setState({ error: `There was an error fetching repositories.` });
         });
     }
-  }
+  };
 
   //renders a loading message if there is no error and the repo has not been cached yet
-  isLoading() {
+  isLoading = () => {
     const { selectedLanguage, repos, error } = this.state;
     return !repos[selectedLanguage] && error === null;
-  }
+  };
 
   render() {
     const { selectedLanguage, repos, error } = this.state;
