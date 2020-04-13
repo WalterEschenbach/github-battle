@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import Popular from "./components/Popular";
-import Battle from "./components/Battle";
-import Results from "./components/Results";
+import Popular from "./components/popular";
+import Battle from "./components/battle";
+import Results from "./components/results";
 import { ThemeProvider } from "./contexts/theme";
-import Nav from "./components/Nav";
+import Nav from "./components/nav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
