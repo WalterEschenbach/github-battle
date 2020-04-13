@@ -5,7 +5,9 @@ import { ThemeProvider } from "./contexts/theme";
 import Nav from "./components/nav";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Loading from "./components/loading";
-
+import { Popular } from "./components/popular";
+import { Battle } from "./components/Battle";
+import { Results } from "./components/Results";
 const Popular = React.lazy(() => import("./components/Popular"));
 const Battle = React.lazy(() => import("./components/Battle"));
 const Results = React.lazy(() => import("./components/Results"));
