@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm i --also=dev webpack-dev-server",
+    "start": "npm i --also=dev serve -s build webpack-dev-server",
     "build": "set NODE_ENV=production && webpack"
   },
   "babel": {
@@ -26,7 +26,8 @@
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-icons": "^3.5.0",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "serve": "^12.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
