@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js -d --config webpack.dev.config.js --content-base public/ --progress --colors",
+    "start": "webpack-dev-server",
     "build": "set NODE_ENV=production && webpack"
   },
   "babel": {
